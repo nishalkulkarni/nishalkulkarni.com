@@ -1,10 +1,17 @@
 import React from "react"
+import styled from "styled-components"
+
+const FooterContainer = styled.footer`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 2.5rem 0;
+`
 
 const Footer = ({ siteTitle }) => (
-  <footer>
+  <FooterContainer>
     <small>
-      Made by    
-      <strong>Nishal Kulkarni</strong> /
+      Made by <strong>Nishal Kulkarni</strong> /{" "}
       <a
         href="https://github.com/nishalkulkarni/nishalkulkarni.com"
         target="_blank"
@@ -13,7 +20,7 @@ const Footer = ({ siteTitle }) => (
         View source
       </a>
     </small>
-  </footer>
+  </FooterContainer>
 )
 
 export default Footer

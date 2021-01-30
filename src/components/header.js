@@ -1,44 +1,78 @@
 import { Link } from "gatsby"
 import React from "react"
+import styled from "styled-components"
 
-const Header = ({siteTitle, siteDescription }) => (
+const Nav = styled.nav`
+  display: flex;
+  /* position: static; */
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 0;
+`
+const NavBrand = styled.div``
+const NavBrandLink = styled(Link)`
+  font-weight: 600;
+  color: ${props => props.theme.textWeight2};
+
+  :hover,
+  :active,
+  :focus {
+    color: ${props => props.theme.textWeight1};
+    text-decoration: underline;
+  }
+`
+
+const NavItems = styled.ul`
+  list-style-type: none;
+  overflow: hidden;
+`
+
+const NavItem = styled.li`
+  float: left;
+`
+const NavLink = styled(Link)`
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  margin: 0 0.5rem;
+  color: ${props => props.theme.textWeight3};
+  font-weight: 400;
+
+  :hover,
+  :active,
+  :focus {
+    color: ${props => props.theme.textWeight1};
+    text-decoration: underline;
+  }
+`
+
+const Header = ({ siteTitle, siteAuthorGithub }) => (
   <header>
-    <nav role="navigation">
-      <div class="nav-brand">
-        <Link to="/">
+    <Nav role="navigation">
+      <NavBrand>
+        <NavBrandLink to="/">
           <span>{siteTitle}</span>
-        </Link>
-      </div>
-      <ul class="nav-links">
-        <li>
-          <Link to="/blog">Blog</Link>
-        </li>
-        <li>
-          <Link to="/contact">Contact</Link>
-        </li>
-        <li>
-          <Link href="{{site.data.info.github-url}}" target="_blank">
+        </NavBrandLink>
+      </NavBrand>
+      <NavItems>
+        <NavItem>
+          <NavLink to="/blog">Blog</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink to="/contact">Contact</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            as="a"
+            href={siteAuthorGithub}
+            target="_blank"
+            rel="noreferrer"
+          >
             GitHub
-          </Link>
-        </li>
-
-        <li>
-          <button
-            class="color-mode-btn light--hidden"
-            a
-            aria-label="Toggle light mode"
-          >
-            <i class="far fa-sun"></i>
-          </button>
-          <button
-            class="color-mode-btn dark--hidden"
-            aria-label="Toggle dark mode"
-          >
-            <i class="far fa-moon"></i>
-          </button>
-        </li>
-      </ul>
-    </nav>
+          </NavLink>
+        </NavItem>
+      </NavItems>
+    </Nav>
   </header>
 )
 export default Header

@@ -10,17 +10,18 @@ const AppContainer = styled.main`
   background: ${props => props.theme.primaryBgColor};
   border-left: 0.125rem solid ${props => props.theme.pageBorderColor};
   border-right: 0.125rem solid ${props => props.theme.pageBorderColor};
-  max-width: 800px;
   margin: 0 auto;
+  padding: 0 2rem; // adds to width :(
+  max-width: 800px;
 `
 
 const Layout = ({ children }) => {
-  const { title, description } = useSiteMetadata()
+  const { title, description, authorGithub } = useSiteMetadata()
   return (
     <ThemeProvider theme={lightTheme}>
       <GlobalStyles />
       <AppContainer>
-        <Header siteTitle={title} siteDescription={description} />
+        <Header siteTitle={title} siteAuthorGithub={authorGithub} />
         {children}
         <Footer siteTitle={title} />
       </AppContainer>
