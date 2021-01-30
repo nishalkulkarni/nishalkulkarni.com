@@ -1,18 +1,26 @@
 import React from "react"
 import Layout from "../components/layout"
-import  Dump from '../components/Dump'
+import { graphql, Link } from "gatsby"
+import styled from "styled-components"
+
+const IndexWrapper = styled.main``
+
+const PostWrapper = styled.div``
 
 const IndexPage = ({ data }) => {
   return (
     <Layout>
-      <Dump data={data} />
-      {data.allMdx.nodes.map(({ excerpt, frontmatter }) => (
-        <>
-          <h1>{frontmatter.title}</h1>
-          <p>{frontmatter.date}</p>
-          <p>{excerpt}</p>
-        </>
-      ))}
+      <IndexWrapper>
+        {data.allMdx.nodes.map(({ id, excerpt, frontmatter, fields }) => (
+          <PostWrapper key={id}>
+            <Link to={fields.slug}>
+              <h1>{frontmatter.title}</h1>
+              <p>{frontmatter.date}</p>
+              <p>{excerpt}</p>
+            </Link>
+          </PostWrapper>
+        ))}
+      </IndexWrapper>
     </Layout>
   )
 }
