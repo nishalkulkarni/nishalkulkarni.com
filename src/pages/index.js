@@ -1,22 +1,41 @@
 import React from "react"
-import { useSiteMetadata } from "../hooks/useSiteMetadata"
 import Layout from "../components/layout"
-import styled from "styled-components"
+import  Dump from '../components/Dump'
 
-const StyledH1 = styled.h1`
-  color: rebeccapurple;
-`
-
-const IndexPage = () => {
-  const { title, description } = useSiteMetadata()
+const IndexPage = ({ data }) => {
   return (
     <Layout>
-      <StyledH1>Hi {title}</StyledH1>
-      <p>Welcome to your new Gatsby site.</p>
-      <p>Now go build something great.</p>
-      <p>{description}</p>
+      <Dump data={data} />
+      {data.allMdx.nodes.map(({ excerpt, frontmatter }) => (
+        <>
+          <h1>{frontmatter.title}</h1>
+          <p>{frontmatter.date}</p>
+          <p>{excerpt}</p>
+        </>
+      ))}
     </Layout>
   )
 }
 
 export default IndexPage
+
+export const query = graphql`
+  query SITE_INDEX_QUERY {
+    allMdx(
+      sort: { fields: [frontmatter___date], order: DESC }
+      filter: { frontmatter: { published: { eq: true } } }
+    ) {
+      nodes {
+        id
+        excerpt(pruneLength: 250)
+        frontmatter {
+          title
+          date
+        }
+        fields {
+          slug
+        }
+      }
+    }
+  }
+`
