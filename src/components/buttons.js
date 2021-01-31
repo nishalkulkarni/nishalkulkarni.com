@@ -3,7 +3,6 @@ import styled from "styled-components"
 const DefaultButton = styled.button`
   display: inline-block;
   padding: 0.5rem 1rem;
-  margin: 0 0.5rem 0.5rem 0;
   vertical-align: middle;
   text-align: center;
   text-transform: none;
@@ -35,7 +34,7 @@ const BlueButton = styled(DefaultButton)`
   }
 `
 
-const GreyButton = styled(DefaultButton)`
+const GrayButton = styled(DefaultButton)`
   border: 0.125rem solid ${props => props.theme.textWeight3};
   background: ${props => props.theme.primaryBgColor};
   color: ${props => props.theme.textWeight3};
@@ -79,7 +78,7 @@ const RedButton = styled(DefaultButton)`
 export {
     DefaultButton,
     BlueButton,
-    GreyButton,
+    GrayButton,
     YellowButton,
     RedButton,
 }

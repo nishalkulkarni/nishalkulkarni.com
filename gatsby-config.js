@@ -2,7 +2,10 @@ const siteMetadata = {
   title: `Nishal Kulkarni`,
   description: `My personal website/blog.`,
   author: `@nishalkulkarni`,
+  authorEmail: `kulknishu@gmail.com`,
   authorGithub: `https://github.com/nishalkulkarni/`,
+  authorLinkedIn: `https://www.linkedin.com/in/nishalkulkarni/`,
+  authorReddit: `https://www.reddit.com/user/infinitynishal`,
 }
 module.exports = {
   siteMetadata: siteMetadata,
