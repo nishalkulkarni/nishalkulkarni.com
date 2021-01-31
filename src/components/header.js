@@ -1,11 +1,10 @@
 import { Link } from "gatsby"
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components"
 import Toggle from "./toggle"
 
 const Nav = styled.nav`
   display: flex;
-  /* position: static; */
   align-items: center;
   padding: 2rem 0;
 `

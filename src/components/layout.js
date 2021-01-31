@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { useSiteMetadata } from "../hooks/useSiteMetadata"
 
 import "normalize.css"
@@ -23,7 +23,7 @@ const Main = styled.main`
 `
 
 const Layout = ({ children }) => {
-  const { title, description, authorGithub } = useSiteMetadata()
+  const { title, authorGithub } = useSiteMetadata()
   const [theme, toggleTheme] = useDarkMode()
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
 
