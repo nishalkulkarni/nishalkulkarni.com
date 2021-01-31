@@ -1,17 +1,35 @@
 const siteMetadata = {
-    title: `Nishal Kulkarni`,
-    description: `My personal website/blog.`,
-    author: `@nishalkulkarni`,
-    authorGithub: `https://github.com/nishalkulkarni/`
-  };
+  title: `Nishal Kulkarni`,
+  description: `My personal website/blog.`,
+  author: `@nishalkulkarni`,
+  authorGithub: `https://github.com/nishalkulkarni/`,
+}
 module.exports = {
   siteMetadata: siteMetadata,
   plugins: [
     `gatsby-plugin-styled-components`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
         extensions: [`.mdx`, `.md`],
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 590,
+            },
+          },
+        ],
+        plugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 590,
+            },
+          },
+        ],
       },
     },
     {
@@ -19,6 +37,13 @@ module.exports = {
       options: {
         name: `posts`,
         path: `${__dirname}/posts`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/src/images`,
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality

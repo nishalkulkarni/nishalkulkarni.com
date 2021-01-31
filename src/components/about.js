@@ -1,6 +1,7 @@
 import React from "react"
-import { Link } from "gatsby"
+import { graphql, useStaticQuery, Link } from "gatsby"
 import styled from "styled-components"
+import Img from "gatsby-image"
 
 const IntroSection = styled.section`
   display: flex;
@@ -10,12 +11,26 @@ const IntroSection = styled.section`
 const MyInfo = styled.div`
   width: 70%;
   order: 1;
+
+  @media screen and (max-width: 576px) {
+    width: 100%;
+  }
 `
 
-const MyPhoto = styled.div`
+const MyImageContainer = styled.div`
   width: 30%;
   order: 2;
+
+  @media screen and (max-width: 576px) {
+    display: none;
+    width: 0%;
+  }
 `
+const MyImage = styled(Img)`
+  border-radius: 50%;
+  margin: 0 5%;
+`
+
 const InTextLink = styled(Link)`
   text-decoration: underline;
   font-weight: 400;
@@ -26,38 +41,51 @@ const InTextLink = styled(Link)`
   }
 `
 
-const About = () => (
-  <IntroSection>
-    <MyPhoto>
-      <img src="assets/images/me.jpg" alt="Photo of Nishal Kulkarni"></img>
-    </MyPhoto>
-    <MyInfo>
-      <h1>Hi, I'm Nishal.</h1>
-      <p>
-        I'm a Computer Science student at the{" "}
-        <InTextLink
-          as="a"
-          href="http://www.vit.ac.in/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Vellore Institute of Technology
-        </InTextLink>
-        , interested in Quantum Computing, competitive coding and am an avid
-        Linux enthusiast. Some of my hobbies are speedcubing, video gaming and
-        playing table tennis.
-      </p>
-      <p>
-        This website is a place where I document my ideas, opinions,
-        achievements and valuable lessons I have learned. You can find all the
-        articles I have written{" "}
-        <InTextLink to="/blog">
-          here
-        </InTextLink>
-        .
-      </p>
-    </MyInfo>
-  </IntroSection>
-)
+const About = () => {
+  const data = useStaticQuery(graphql`
+    query Images {
+      image: file(relativePath: { eq: "me.jpeg" }) {
+        id
+        childImageSharp {
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
+    }
+  `)
 
+  return (
+    <IntroSection>
+      <MyImageContainer>
+        <MyImage
+          fluid={data.image.childImageSharp.fluid}
+          alt="Photo of Nishal Kulkarni"
+        />
+      </MyImageContainer>
+      <MyInfo>
+        <h1>Hi, I'm Nishal.</h1>
+        <p>
+          I'm a Computer Science student at the{" "}
+          <InTextLink
+            as="a"
+            href="http://www.vit.ac.in/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Vellore Institute of Technology
+          </InTextLink>
+          , interested in Quantum Computing, competitive coding and am an avid
+          Linux enthusiast. Some of my hobbies are speedcubing, video gaming and
+          playing table tennis.
+        </p>
+        <p>
+          This website is a place where I document my ideas, opinions,
+          achievements and valuable lessons I have learned. You can find all the
+          articles I have written <InTextLink to="/blog">here</InTextLink>.
+        </p>
+      </MyInfo>
+    </IntroSection>
+  )
+}
 export default About

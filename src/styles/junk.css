@@ -230,28 +230,10 @@ table p {
   color: var(--primary-bg-color);
 }
 
-.photo-self img {
-  margin: 0 5%;
-  width: 90%;
-  border-radius: 50%;
-}
-
 /* Responsive Styling */
 @media screen and (max-width: 800px) {
   .post-links a {
     margin: 0;
     padding: 0.375rem 0.25rem;
   }
-}
-
-@media screen and (max-width: 576px) {
-	.photo-self{
-		display: none;
-		width: 0%;
-	}
-
-	.info-self{
-		width: 100%;
-	}
-
 }
