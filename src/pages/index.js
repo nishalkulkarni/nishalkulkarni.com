@@ -2,6 +2,7 @@ import React from "react"
 import Layout from "../components/layout"
 import { graphql, Link } from "gatsby"
 import styled from "styled-components"
+import About from "../components/about"
 
 const IndexWrapper = styled.main``
 
@@ -10,6 +11,7 @@ const PostWrapper = styled.div``
 const IndexPage = ({ data }) => {
   return (
     <Layout>
+      <About />
       <IndexWrapper>
         {data.allMdx.nodes.map(({ id, excerpt, frontmatter, fields }) => (
           <PostWrapper key={id}>

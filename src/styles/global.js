@@ -33,7 +33,6 @@ body {
   padding: 0;
   margin: 0;
   min-height: 100vh;
-  size: 16px;
   font-size: 16px;
   line-height: 1.6;
   font-weight: 400;

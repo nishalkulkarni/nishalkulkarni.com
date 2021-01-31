@@ -1,22 +1,3 @@
-.color-mode-btn {
-  color: var(--text-weight-3);
-  cursor: pointer;
-  
-  background: none;
-  border: none;
-  border-radius: 0px;
-}
-
-.color-mode-btn i{
-	margin: 0 0.5rem;
-}
-
-.color-mode-btn:hover,
-.color-mode-btn:active,
-.color-mode-btn:focus{
-	color: var(--text-weight-1);
-}
-
 .skip-link {
   position: absolute;
   top: -100px;
@@ -40,10 +21,6 @@
 .sub-section {
   background: var(--primary-bg-color);
   margin: 0rem 2rem;
-}
-
-.content {
-  padding-top: 60px;
 }
 
 .tag-container a {
@@ -156,6 +133,7 @@ table p {
   display: flex;
   align-content: center;
 }
+
 .input-text {
   background: rgba(128, 128, 128, 0.1);
   display: block;
@@ -252,30 +230,6 @@ table p {
   color: var(--primary-bg-color);
 }
 
-.para-link {
-  text-decoration: underline;
-  font-weight: 400;
-}
-
-.para-link:focus,
-.para-link:hover {
-  outline: 1px dashed var(--alt-blue-color);
-}
-
-.self-intro {
-  display: flex;
-  align-items: center;
-}
-
-.info-self {
-  width: 70%;
-  order: 1;
-}
-
-.photo-self {
-  width: 30%;
-  order: 2;
-}
 .photo-self img {
   margin: 0 5%;
   width: 90%;
