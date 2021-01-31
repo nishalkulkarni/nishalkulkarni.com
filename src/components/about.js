@@ -43,8 +43,8 @@ const InTextLink = styled(Link)`
 
 const About = () => {
   const data = useStaticQuery(graphql`
-    query Images {
-      image: file(relativePath: { eq: "me.jpeg" }) {
+    query ImgQuery {
+      myimg: file(relativePath: { eq: "me.jpeg" }) {
         id
         childImageSharp {
           fluid {
@@ -59,7 +59,7 @@ const About = () => {
     <IntroSection>
       <MyImageContainer>
         <MyImage
-          fluid={data.image.childImageSharp.fluid}
+          fluid={data.myimg.childImageSharp.fluid}
           alt="Photo of Nishal Kulkarni"
         />
       </MyImageContainer>
