@@ -1,9 +1,9 @@
 import React from "react"
-import { number, bool } from "prop-types"
+import { string, number, bool } from "prop-types"
 import styled from "styled-components"
 import { Link, graphql, useStaticQuery } from "gatsby"
 
-const ListWrapper = styled.main`
+const ListWrapper = styled.div`
   margin: 3.5rem 0 0.5rem;
 `
 
@@ -79,6 +79,7 @@ const ArticlesList = ({ listTitle, numArticles, withDate }) => {
 }
 
 ArticlesList.propTypes = {
+  listTitle: string.isRequired,
   numArticles: number.isRequired,
   withDate: bool.isRequired,
 }

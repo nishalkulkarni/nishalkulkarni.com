@@ -1,0 +1,33 @@
+- name: Fluid-WM
+  description: A X11 tiling based window manager written in C++
+  icon: 🖥
+  sourceLink: https://github.com/nishalkulkarni/fluid-wm
+
+- name: nishalkulkarni.com
+  description: Personal portofolio website and blog built using GatsbyJS (P.S. It's this website). 
+  icon: 👦🏾
+  demoLink: https://nishalkulkarni.com
+  sourceLink: https://github.com/nishalkulkarni/nishalkulkarni.com
+
+- name: Quantum Adventures
+  description: Short and simple programs I wrote while learning quantum computing using qiskit. 
+  icon: ⚛
+  sourceLink: https://github.com/nishalkulkarni/quantum-adventures
+
+- name: CP-DSA
+  description: Data Structures and Algorithms for competitive programming
+  icon: ⏲
+  sourceLink: https://github.com/nishalkulkarni/cp-dsa
+
+- name: Startpage
+  description: Landing page for your web browser written in HTML, CSS and JS.
+  icon: 📑
+  demoLink: https://infinity-start.surge.sh/
+  sourceLink: https://github.com/nishalkulkarni/startpage
+
+- name: Dotfiles
+  description: Files responsible for making my desktop environment and other applications look pretty.
+  icon: 💾
+  sourceLink: https://github.com/nishalkulkarni/dotfiles
+
+
