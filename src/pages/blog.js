@@ -2,46 +2,53 @@ import React from "react"
 import Layout from "../components/layout"
 import { graphql, Link } from "gatsby"
 import styled from "styled-components"
+import { GrayButton } from "../components/buttons"
 
-const IndexWrapper = styled.main``
+const SearchForm = styled.form`
+  margin-bottom: 1.75rem;
+  display: flex;
+  align-content: center;
+`
 
-const PostWrapper = styled.div``
+const SearchInput = styled.input`
+  background: rgba(128, 128, 128, 0.1);
+  flex-grow: 1;
+
+  display: block;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  outline: none;
+  border: 0.125rem solid ${props => props.theme.grayBorderColor};
+  color: ${props => props.theme.textWeight1};
+
+  :active,
+  :focus {
+    background: rgba(81, 124, 252, 0.08);
+    border: 0.125rem solid ${props => props.theme.blueColor};
+  }
+`
+const ResetButton = styled(GrayButton)`
+  margin-left: 0.5rem;
+`
 
 const BlogPage = ({ data }) => {
   return (
     <Layout>
-      <IndexWrapper>
-        {data.allMdx.nodes.map(({ id, frontmatter, fields }) => (
-          <PostWrapper key={id}>
-            <Link to={fields.slug}>
-              <h1>{frontmatter.title}</h1>
-              <p>{frontmatter.date}</p>
-            </Link>
-          </PostWrapper>
-        ))}
-      </IndexWrapper>
+      <h1>Blog</h1>
+
+      <SearchForm id="articleSearch">
+        <SearchInput
+          id="search-input"
+          type="text"
+          name="searchTerm"
+          placeholder="Type here to filter posts..."
+        />
+        <ResetButton type="reset">Reset</ResetButton>
+      </SearchForm>
+
+      
     </Layout>
   )
 }
 
 export default BlogPage
-
-export const query = graphql`
-  query SITE_INDEX_QUERY {
-    allMdx(
-      sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { published: { eq: true } } }
-    ) {
-      nodes {
-        id
-        frontmatter {
-          title
-          date(formatString: "Do MMMM YYYY")
-        }
-        fields {
-          slug
-        }
-      }
-    }
-  }
-`

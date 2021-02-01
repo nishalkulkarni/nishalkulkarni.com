@@ -6,7 +6,6 @@ import { useSiteMetadata } from "../hooks/useSiteMetadata"
 
 const ContactForm = styled.form`
   margin-bottom: 1.75rem;
-  width: 100%;
   display: flex;
   align-content: center;
 `
@@ -17,7 +16,6 @@ const EmailInput = styled.input`
   border-radius: 0.25rem;
   padding: 0.5rem;
   outline: none;
-  max-width: 100%;
   border: 0.125rem solid ${props => props.theme.grayBorderColor};
   color: ${props => props.theme.textWeight1};
   width: 50%;
@@ -33,7 +31,7 @@ const SubmitButton = styled(BlueButton)`
   margin: 0 0.5rem;
 `
 
-const Contact = () => {
+const ContactPage = () => {
   const { authorEmail, authorLinkedIn, authorReddit } = useSiteMetadata()
   return (
     <Layout>
@@ -74,4 +72,4 @@ const Contact = () => {
   )
 }
 
-export default Contact
+export default ContactPage
