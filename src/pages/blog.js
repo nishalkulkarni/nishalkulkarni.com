@@ -4,6 +4,17 @@ import { graphql, Link } from "gatsby"
 import styled from "styled-components"
 import { GrayButton } from "../components/buttons"
 
+const TagsBox = styled.p``
+
+const TagLink = styled(Link)`
+  font-weight: 400;
+
+  :focus,
+  :hover {
+    outline: 0.0625rem dashed ${props => props.theme.altBlueColor};
+  }
+`
+
 const SearchBox = styled.div`
   margin-bottom: 1.75rem;
   display: flex;
@@ -62,7 +73,7 @@ const ArticleDate = styled.small`
 `
 
 const BlogPage = ({ data }) => {
-  const allPosts = data.allMdx.nodes
+  const allPosts = data.postsMdx.nodes
 
   const emptyQuery = ""
   const [state, setState] = useState({
@@ -72,7 +83,7 @@ const BlogPage = ({ data }) => {
 
   const handleInputChange = event => {
     const query = event.target.value
-    const posts = data.allMdx.nodes || []
+    const posts = data.postsMdx.nodes || []
 
     const filteredData = posts.filter(post => {
       const { title, tags } = post.frontmatter
@@ -93,10 +104,25 @@ const BlogPage = ({ data }) => {
   const hasSearchResults = filteredData && query !== emptyQuery
   const posts = hasSearchResults ? filteredData : allPosts
 
+  const allTags = data.tagsMdx.group.sort((a, b) =>
+    a.totalCount < b.totalCount ? 1 : -1
+  )
+  const displayTags = []
+  const numTags = 2
+  allTags.slice(0, numTags).forEach(({ tag }) => {
+    displayTags.push(<TagLink to={"/tags/" + tag}>{tag}</TagLink>)
+    displayTags.push(" , ")
+    return tag
+  })
+
   return (
     <Layout>
       <h1>Blog</h1>
-
+      <TagsBox>
+        <strong>Tags: </strong>
+        {displayTags}
+        <TagLink to="/tags">view all tags</TagLink>.
+      </TagsBox>
       <SearchBox>
         <SearchInput
           id="search-input"
@@ -124,7 +150,7 @@ export default BlogPage
 
 export const blogPageQuery = graphql`
   query {
-    allMdx(
+    postsMdx: allMdx(
       sort: { fields: [frontmatter___date], order: DESC }
       filter: { frontmatter: { published: { eq: true } } }
     ) {
@@ -138,6 +164,12 @@ export const blogPageQuery = graphql`
         fields {
           slug
         }
+      }
+    }
+    tagsMdx: allMdx {
+      group(field: frontmatter___tags) {
+        tag: fieldValue
+        totalCount
       }
     }
   }
