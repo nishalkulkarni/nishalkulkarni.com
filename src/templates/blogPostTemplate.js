@@ -4,6 +4,7 @@ import { MDXProvider } from "@mdx-js/react"
 import React from "react"
 import Layout from "../components/layout"
 import styled from "styled-components"
+import { Link } from "gatsby"
 
 const PostHeader = styled.div`
   margin-bottom: 2rem;
@@ -20,7 +21,7 @@ const PostTags = styled.div`
   flex-direction: row;
 `
 
-const Tag = styled.a`
+const Tag = styled(Link)`
   margin: 0 0.25rem;
   color: ${props => props.theme.textWeight2};
   font-weight: 500;
@@ -58,7 +59,7 @@ export default ({ data }) => {
   const allTags = []
 
   for (const [index, tag] of frontmatter.tags.entries()) {
-    allTags.push(<Tag href={"tags/" + tag}>{tag}</Tag>)
+    allTags.push(<Tag to={"/tags/" + tag}>{tag}</Tag>)
     if (index !== frontmatter.tags.length - 1) {
       allTags.push("/")
     }

@@ -122,7 +122,7 @@ const BlogPage = ({ data }) => {
 
 export default BlogPage
 
-export const pageQuery = graphql`
+export const blogPageQuery = graphql`
   query {
     allMdx(
       sort: { fields: [frontmatter___date], order: DESC }
