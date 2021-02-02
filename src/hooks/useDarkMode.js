@@ -1,22 +1,33 @@
 import { useEffect, useState } from "react"
 
 export const useDarkMode = () => {
+  var checkLocalTheme = null
+  if (typeof window !== `undefined`) {
+    checkLocalTheme = window.localStorage.getItem("theme")
+  }
   const [theme, setTheme] = useState(
-    window.localStorage.getItem("theme") || "light"
+    checkLocalTheme || "light"
   )
+
   const toggleTheme = () => {
     if (theme === "light") {
-      window.localStorage.setItem("theme", "dark")
+      if (typeof window !== `undefined`) {
+        window.localStorage.setItem("theme", "dark")
+      }
       setTheme("dark")
     } else {
-      window.localStorage.setItem("theme", "light")
+      if (typeof window !== `undefined`) {
+        window.localStorage.setItem("theme", "light")
+      }
       setTheme("light")
     }
   }
 
   useEffect(() => {
-    const localTheme = window.localStorage.getItem("theme")
-    localTheme && setTheme(localTheme)
+    if (typeof window !== `undefined`) {
+      const localTheme = window.localStorage.getItem("theme")
+      localTheme && setTheme(localTheme)
+    }
   }, [])
 
   return [theme, toggleTheme]

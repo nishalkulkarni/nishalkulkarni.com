@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { Link, graphql } from "gatsby"
 import Layout from "../components/layout"
 import styled from "styled-components"
+import SEO from "../components/seo"
 
 const CurrentTag = styled.span`
   text-decoration: underline;
@@ -46,6 +47,7 @@ const Tags = ({ pageContext, data }) => {
 
   return (
     <Layout>
+      <SEO title={"Tag - " + tag}/>
       <h1>
         {totalCount + " post" + (totalCount === 1 ? "" : "s") + " tagged with "}
         <CurrentTag>{tag}</CurrentTag>

@@ -5,6 +5,7 @@ import React from "react"
 import Layout from "../components/layout"
 import styled from "styled-components"
 import { Link } from "gatsby"
+import SEO from "../components/seo"
 
 const PostHeader = styled.div`
   margin-bottom: 2rem;
@@ -67,6 +68,7 @@ export default ({ data }) => {
 
   return (
     <Layout>
+      <SEO title={frontmatter.title} />
       <article>
         <PostHeader>
           <PostTitle>{frontmatter.title}</PostTitle>

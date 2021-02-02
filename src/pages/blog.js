@@ -3,6 +3,7 @@ import Layout from "../components/layout"
 import { graphql, Link } from "gatsby"
 import styled from "styled-components"
 import { GrayButton } from "../components/buttons"
+import SEO from "../components/seo"
 
 const TagsBox = styled.p``
 
@@ -117,6 +118,7 @@ const BlogPage = ({ data }) => {
 
   return (
     <Layout>
+      <SEO title="Blog"/>
       <h1>Blog</h1>
       <TagsBox>
         <strong>Tags: </strong>

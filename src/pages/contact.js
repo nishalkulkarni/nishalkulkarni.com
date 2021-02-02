@@ -3,6 +3,7 @@ import Layout from "../components/layout"
 import styled from "styled-components"
 import { BlueButton } from "../components/buttons"
 import { useSiteMetadata } from "../hooks/useSiteMetadata"
+import SEO from "../components/seo"
 
 const ContactForm = styled.form`
   margin-bottom: 1.75rem;
@@ -35,6 +36,7 @@ const ContactPage = () => {
   const { authorEmail, authorLinkedIn, authorReddit } = useSiteMetadata()
   return (
     <Layout>
+      <SEO title="Contact Me"/>
       <h1>Stay in touch</h1>
       <p>
         Like the posts you see here? Sign up to get notified about new content.
