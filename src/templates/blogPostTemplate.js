@@ -1,5 +1,6 @@
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
+import { MDXProvider } from "@mdx-js/react"
 import React from "react"
 import Layout from "../components/layout"
 import styled from "styled-components"
@@ -23,12 +24,13 @@ const Tag = styled.a`
   margin: 0 0.25rem;
   color: ${props => props.theme.textWeight2};
   font-weight: 500;
-  text-decoration:underline;
+  text-decoration: underline;
 
   :hover,
   :active,
   :focus {
     color: ${props => props.theme.textWeight1};
+    outline: 0.0625rem dashed ${props => props.theme.textWeight1};
   }
 `
 
@@ -38,17 +40,25 @@ const PostFooter = styled.div`
   padding: 1rem 0;
   margin: 2rem 0;
 
-  div{
+  div {
     margin: 0.25rem 0;
   }
 `
 
+const PostFigure = styled.figure`
+  text-align: center;
+  margin: 1rem 0;
+`
+
 export default ({ data }) => {
   const { frontmatter, body, slug } = data.mdx
+  const shortcodes = {
+    figure: PostFigure,
+  }
   const allTags = []
 
   for (const [index, tag] of frontmatter.tags.entries()) {
-    allTags.push(<Tag href={"tags/"+tag}>{tag}</Tag>)
+    allTags.push(<Tag href={"tags/" + tag}>{tag}</Tag>)
     if (index !== frontmatter.tags.length - 1) {
       allTags.push("/")
     }
@@ -62,7 +72,9 @@ export default ({ data }) => {
           <time>{frontmatter.date}</time>
           <PostTags>Tags: {allTags}</PostTags>
         </PostHeader>
-        <MDXRenderer>{body}</MDXRenderer>
+        <MDXProvider components={shortcodes}>
+          <MDXRenderer>{body}</MDXRenderer>
+        </MDXProvider>
         <PostFooter>
           <div>
             Found something wrong or missing?{" "}
@@ -78,7 +90,6 @@ export default ({ data }) => {
               Edit on GitHub
             </a>
           </div>
-        
         </PostFooter>
       </article>
     </Layout>

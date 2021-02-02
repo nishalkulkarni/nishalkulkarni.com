@@ -37,7 +37,7 @@ const InTextLink = styled(Link)`
 
   :focus,
   :hover {
-    outline: 1px dashed ${props => props.theme.altBlueColor};
+    outline: 0.0625rem dashed ${props => props.theme.altBlueColor};
   }
 `
 

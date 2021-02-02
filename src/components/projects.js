@@ -39,7 +39,7 @@ const ProjectLinks = styled.div`
     text-decoration: underline;
     :focus,
     :hover {
-      outline: 1px dashed ${props => props.theme.altBlueColor};
+      outline: 0.0625rem dashed ${props => props.theme.altBlueColor};
     }
   }
 `
