@@ -82,7 +82,7 @@ const About = () => {
         <p>
           This website is a place where I document my ideas, opinions,
           achievements and valuable lessons I have learned. You can find all the
-          articles I have written <InTextLink to="/blog">here</InTextLink>.
+          articles I have written on the <InTextLink to="/blog">blog</InTextLink> page.
         </p>
       </MyInfo>
     </IntroSection>

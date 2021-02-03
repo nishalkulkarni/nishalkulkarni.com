@@ -5,7 +5,9 @@ import { ThemeManagerContext } from "gatsby-styled-components-dark-mode"
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-const ToggleContainer = styled.button`
+const ToggleContainer = styled.button.attrs({
+  'aria-label': 'Toggle theme',
+})`
   cursor: pointer;
   background: none;
   border: none;
