@@ -83,7 +83,7 @@ export default ({ data }) => {
             Found something wrong or missing?{" "}
             <a
               href={
-                "https://github.com/nishalkulkarni/nishalkulkarni.com/blob/master/posts/" +
+                "https://github.com/nishalkulkarni/nishalkulkarni.com/blob/main/posts/" +
                 slug +
                 "index.mdx"
               }
