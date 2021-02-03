@@ -101,6 +101,13 @@ const BlogPage = ({ data }) => {
     })
   }
 
+  const handleReset = () => {
+    setState({
+      filteredData: [],
+      query: emptyQuery,
+    })
+  }
+
   const { filteredData, query } = state
   const hasSearchResults = filteredData && query !== emptyQuery
   const posts = hasSearchResults ? filteredData : allPosts
@@ -118,7 +125,7 @@ const BlogPage = ({ data }) => {
 
   return (
     <Layout>
-      <SEO title="Blog"/>
+      <SEO title="Blog" />
       <h1>Blog</h1>
       <TagsBox>
         <strong>Tags: </strong>
@@ -131,9 +138,12 @@ const BlogPage = ({ data }) => {
           type="text"
           name="searchTerm"
           placeholder="Type here to filter posts..."
+          value={state.query}
           onChange={handleInputChange}
         />
-        <ResetButton type="reset">Reset</ResetButton>
+        <ResetButton type="reset" onClick={handleReset}>
+          Reset
+        </ResetButton>
       </SearchBox>
 
       {posts.map(({ id, frontmatter, fields }) => (
