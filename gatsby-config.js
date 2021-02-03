@@ -1,3 +1,5 @@
+const { lightTheme, darkTheme } = require(`${__dirname}/src/styles/theme.js`)
+
 const siteMetadata = {
   title: `Nishal Kulkarni`,
   titleTemplate: "%s",
@@ -10,6 +12,7 @@ const siteMetadata = {
   authorLinkedIn: `https://www.linkedin.com/in/nishalkulkarni/`,
   authorReddit: `https://www.reddit.com/user/infinitynishal`,
 }
+
 module.exports = {
   siteMetadata: siteMetadata,
   plugins: [
@@ -28,6 +31,13 @@ module.exports = {
         display: `standalone`,
         icon: `src/images/icon.png`,
         theme_color_in_head: false,
+      },
+    },
+    {
+      resolve: `gatsby-styled-components-dark-mode`,
+      options: {
+        light: lightTheme,
+        dark: darkTheme,
       },
     },
     {

@@ -2,9 +2,7 @@ import React from "react"
 import { useSiteMetadata } from "../hooks/useSiteMetadata"
 
 import "normalize.css"
-import styled, { ThemeProvider } from "styled-components"
-import { useDarkMode } from "../hooks/useDarkMode"
-import { lightTheme, darkTheme } from "../styles/theme"
+import styled, { withTheme }  from "styled-components"
 import GlobalStyles from "../styles/global"
 
 import Header from "./header"
@@ -22,7 +20,7 @@ const A11ySkipLink = styled.a`
 
   :focus {
     top: 0.75rem;
-  left: 0.75rem;
+    left: 0.75rem;
     transition: 0.4s top;
     border: 0.125rem solid ${props => props.theme.textWeight2};
     text-decoration: underline;
@@ -42,27 +40,20 @@ const Main = styled.main`
   padding-top: 4rem;
 `
 
-const Layout = ({ children }) => {
+const Layout = withTheme(({ children, theme }) => {
   const { title, authorGithub } = useSiteMetadata()
-  const [theme, toggleTheme] = useDarkMode()
-  const themeMode = theme === "light" ? lightTheme : darkTheme
 
   return (
-    <ThemeProvider theme={themeMode}>
-      <GlobalStyles />
+    <>
+      <GlobalStyles theme={theme} />
       <A11ySkipLink href="#maincontent">Skip to main content</A11ySkipLink>
       <AppContainer>
-        <Header
-          siteTitle={title}
-          siteAuthorGithub={authorGithub}
-          theme={theme}
-          toggleTheme={toggleTheme}
-        />
+        <Header siteTitle={title} siteAuthorGithub={authorGithub} />
         <Main id="maincontent">{children}</Main>
         <Footer siteTitle={title} />
       </AppContainer>
-    </ThemeProvider>
+    </>
   )
-}
+})
 
 export default Layout

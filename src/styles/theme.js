@@ -1,4 +1,4 @@
-export const lightTheme = {
+const lightTheme = {
     primaryBgColor: '#ffffff',
     secondaryBgColor: '#f5f5f5',
   
@@ -22,7 +22,7 @@ export const lightTheme = {
     textWeight5: '#383838',
 }
 
-export const darkTheme = {
+const darkTheme = {
   primaryBgColor: '#0a0a0a',
   secondaryBgColor: '#000000',
 
@@ -44,4 +44,9 @@ export const darkTheme = {
   textWeight3: '#c7c7c7',
   textWeight4: '#bfbfbf',
   textWeight5: '#b1b1b1',
+}
+
+module.exports = {
+  lightTheme,
+  darkTheme
 }

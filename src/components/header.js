@@ -47,7 +47,7 @@ const NavLink = styled(Link)`
   }
 `
 
-const Header = ({ siteTitle, siteAuthorGithub, theme, toggleTheme }) => {
+const Header = ({ siteTitle, siteAuthorGithub}) => {
   return (
     <header>
       <Nav role="navigation">
@@ -74,7 +74,7 @@ const Header = ({ siteTitle, siteAuthorGithub, theme, toggleTheme }) => {
             </NavLink>
           </NavItem>
         </NavItems>
-        <Toggle theme={theme} toggleTheme={toggleTheme} />
+        <Toggle />
       </Nav>
     </header>
   )
