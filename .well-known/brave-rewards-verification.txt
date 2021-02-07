@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: nishalkulkarni.com
+Token: 74872bc96936c434ea1cc5f55b78633efe4be54996c4cc01ee8663f788826ce5
