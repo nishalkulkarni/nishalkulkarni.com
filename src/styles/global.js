@@ -84,6 +84,26 @@ ul {
   list-style-position: inside;
 }
 
+table {
+  border: 2px solid #cccccc;
+  padding: 0.5rem;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 2px dashed #cccccc;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+code {
+  background-color: ${props => props.theme.textWeight5};
+  color:  ${props => props.theme.primaryBgColor};
+  border-radius: 0.25rem;
+  padding: 0 0.25rem;
+}
+
 `
 
 export default GlobalStyles
