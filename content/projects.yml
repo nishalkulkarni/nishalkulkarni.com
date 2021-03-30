@@ -1,3 +1,8 @@
+- name: Arcadia Linux
+  description: An Arch based Linux Distribution
+  icon: 🐧
+  sourceLink: https://github.com/ArcadiaLinux/Arcadia
+
 - name: Fluid-WM
   description: A X11 tiling based window manager written in C++
   icon: 🖥
@@ -18,12 +23,6 @@
   description: Data Structures and Algorithms for competitive programming
   icon: ⏲
   sourceLink: https://github.com/nishalkulkarni/cp-dsa
-
-- name: Startpage
-  description: Landing page for your web browser written in HTML, CSS and JS.
-  icon: 📑
-  demoLink: https://infinity-start.surge.sh/
-  sourceLink: https://github.com/nishalkulkarni/startpage
 
 - name: Dotfiles
   description: Files responsible for making my desktop environment and other applications look pretty.
