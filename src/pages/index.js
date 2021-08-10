@@ -10,7 +10,7 @@ const IndexPage = () => {
     <Layout>
       <SEO />
       <About />
-      <ArticlesList numArticles={5} withDate={true} listTitle="Recent Articles"/>
+      <ArticlesList numArticles={10} withDate={true} listTitle="Recent Articles"/>
       <ProjectsList numProjects={10} />
     </Layout>
   )
