@@ -18,17 +18,17 @@ After discussing with my mentors I built an extension which on getting notified 
 and then sets a timestamp(inactive-since) as an extended attribute on the cgroup directory for that particular PID.
 Resourced daemons can then monitor the cgroup directories for these changes and make allocation decisions accordingly.
 
-Window Tracker Extension Gitlab Repo Link: [https://gitlab.gnome.org/nishalkulkarni/window-tracker-extension/](https://gitlab.gnome.org/nishalkulkarni/window-tracker-extension/)
+**Window Tracker Extension Gitlab Repo**: [https://gitlab.gnome.org/nishalkulkarni/window-tracker-extension/](https://gitlab.gnome.org/nishalkulkarni/window-tracker-extension/)
 
-Current Status: Complete
+**Current Status**: Complete
 
 #### Task 2 - Updating uresourced
 uresourced is the place where most of the changes have taken place, from implementing the basic structure to working with experimental ideas.
 Hence I have given a more detailed module-wise breakdown for individual changes. However, you can check out the overall Merge request below.
 
-uresourced Gitlab Merge Request:  [https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12](https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12)
+**uresourced Gitlab Merge Request**:  [https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12](https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12)
 
-Current Status: Code review completed, pending merge.
+**Current Status**: Code review completed, pending merge.
 
 #### Task 2A - App monitoring (r-app-monitor)
 This change allows us to recursively monitors changes to the app.slice directory and sub-directories, 
@@ -36,7 +36,7 @@ I.e. the cgroups inside app.slice and emits a changed signal whenever the extend
 when another program calls a function to emit change based on other signals like audio. 
 It tracks all information using watch descriptors and app paths, stored in Hash Tables for convenience and fast access.
 
-r-app-monitor code commit: [https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=e695d8e2a89171000e2c8981fc83d7aa52e142d3](https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=e695d8e2a89171000e2c8981fc83d7aa52e142d3)
+**r-app-monitor code commit**: [https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=e695d8e2a89171000e2c8981fc83d7aa52e142d3](https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=e695d8e2a89171000e2c8981fc83d7aa52e142d3)
 
 #### Task 2B - Resource allocation policy (r-app-policy)
 It is responsible for actually making the policy decisions and setting resources accordingly. 
@@ -47,7 +47,7 @@ Currently, only CPUWeight is adjusted for a particular cgroup and the allocation
 1. Timestamp - Active window (timestamp = -1) gets a weight of 1000 while non-active window gets default weight of 100.
 2. Boosted - If boosted the application gets an additional weight of 500 irrespective of the applications current state (focussed or not)
 
-r-app-policy code commit: [https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=e8cce224184af4a44bf6da6dc896dd7139f076cf](https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=e8cce224184af4a44bf6da6dc896dd7139f076cf)
+**r-app-policy code commit**: [https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=e8cce224184af4a44bf6da6dc896dd7139f076cf](https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=e8cce224184af4a44bf6da6dc896dd7139f076cf)
 
 #### Task 2C - Audio monitoring using pipewire (r-pw-monitor)
 After having the basic structure in place I started working on using an additional indicator, 
@@ -57,7 +57,7 @@ This serves as a heuristic for detecting interactive applications so that they a
 It adds custom pipewire GSource to the main loop and listens to node events from pipewire-pulse API, 
 after receiving state change idle or suspended to running we set the boosted flag on RAppinfo for the associated cgroup and emit a changed signal.
 
-r-pw-monitor code commit: [https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=f0ba15e0dd34b282ea7a7252bec1c97221b918c1](https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=f0ba15e0dd34b282ea7a7252bec1c97221b918c1)
+**r-pw-monitor code commit**: [https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=f0ba15e0dd34b282ea7a7252bec1c97221b918c1](https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=f0ba15e0dd34b282ea7a7252bec1c97221b918c1)
 
 #### Task 2C - Boosting games using GameMode (r-game-monitor)
 Another area where we can provide additional boost is games.
@@ -67,7 +67,7 @@ taking advantage of a background utility called GameMode by Feral Interactive.
 Every time a game is registered or unregistered we receive a signal from the dbus interface, 
 we then make the app boosted depending on the respective signal.
 
-r-game-monitor code commit: [https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=395647b71d6f8ee381a93b0d0590d5ea32062a4e](https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=395647b71d6f8ee381a93b0d0590d5ea32062a4e)
+**r-game-monitor code commit**: [https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=395647b71d6f8ee381a93b0d0590d5ea32062a4e](https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=395647b71d6f8ee381a93b0d0590d5ea32062a4e)
 
 ### Task 3 - Updates to mutter
 Having an extension that does the job of setting xattr on cgroup directories is fine for experimentation 
@@ -76,16 +76,16 @@ Like the PID associated with every MetaWindow we now have a cgroup associated wi
 For now, it's a GFile identifying the cgroup directory for that particular MetaWindow and hence the application.
 Whenever there's a focus update detected the code takes care of updating the timestamp xattr on that application's cgroup directory.
 
-mutter Merge Request: [https://gitlab.gnome.org/GNOME/mutter/-/merge_requests/1960](https://gitlab.gnome.org/GNOME/mutter/-/merge_requests/1960)
+**mutter Merge Request**: [https://gitlab.gnome.org/GNOME/mutter/-/merge_requests/1960](https://gitlab.gnome.org/GNOME/mutter/-/merge_requests/1960)
 
-Current Status: Code review completed, pending merge.
+**Current Status**: Code review completed, pending merge.
 
 ### Other Tasks and possible Future work
 Talking about more places where we can utilize these cgroup features, 
 we have currently put up a proposal to implement a way for large applications to manage multiple worker processes using an xdg-portal. 
 This will be beneficial in providing better resource distribution and isolating bad actors.
 
-xdg-desktop-portal Issue: [https://github.com/flatpak/xdg-desktop-portal/issues/604](https://github.com/flatpak/xdg-desktop-portal/issues/604)
+**xdg-desktop-portal Issue**: [https://github.com/flatpak/xdg-desktop-portal/issues/604](https://github.com/flatpak/xdg-desktop-portal/issues/604)
 
 There are also other ideas for experimentation provided by my mentor like detecting battery draining applications using CPU Pressure information
 and collecting hints from .desktop file to make more policy decisions. 
@@ -97,9 +97,9 @@ I gave my very first presentation at this years GUADEC Intern Lightning Talks an
 Right from getting to know what other interns have been working on, to the positive feedback from people in this community.
 I did attend a few other talks and BoFs and was truly fascinated by the work that has been going on.
 
-GUADEC presentation: [https://youtu.be/DjmL5YbcPEQ?t=6014](https://youtu.be/DjmL5YbcPEQ?t=6014)
+**GUADEC presentation**: [https://youtu.be/DjmL5YbcPEQ?t=6014](https://youtu.be/DjmL5YbcPEQ?t=6014)
 
-Slides used: [https://github.com/nishalkulkarni/nishalkulkarni.com/blob/main/static/Nishal_GUADEC_Slides.pdf](https://github.com/nishalkulkarni/nishalkulkarni.com/blob/main/static/Nishal_GUADEC_Slides.pdf)
+**Slides used**: [https://github.com/nishalkulkarni/nishalkulkarni.com/blob/main/static/Nishal_GUADEC_Slides.pdf](https://github.com/nishalkulkarni/nishalkulkarni.com/blob/main/static/Nishal_GUADEC_Slides.pdf)
 
 ### Final thoughts
 The entire GSoC experience was surreal, 
