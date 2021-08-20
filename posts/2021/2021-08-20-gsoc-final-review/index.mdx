@@ -14,9 +14,13 @@ To give a brief idea about my contributions throughout this period I have presen
 
 #### Task 1 - Creating a GNOME extension
 My first task was to track the active or currently open window in gnome-shell and allocate more CPU weight to it.
-After discussing with my mentors I built an extension which on getting notified when the focus-window has changed, gets the PID of the respective window
-and then sets a timestamp(inactive-since) as an extended attribute on the cgroup directory for that particular PID.
-Resourced daemons can then monitor the cgroup directories for these changes and make allocation decisions accordingly.
+After discussing with my mentors I built an extension which on getting notified when the focus-window has changed, gets the PID of the respective window.
+Based on this PID we find the cgroup directory for that particular application.
+cgroups (control groups) is a Linux kernel feature that limits and isolates the resource usage of a collection of processes.
+
+We then set an "inactive-since" timestamp which can be used to determine when the application was last active or if it is currently active(-1) as an extended attribute(xattr) on the cgroup directory.
+An extended attribute is a name:value pair associated permanently with a file or directory. 
+Resource management daemons can then monitor the cgroup directories for these changes and make allocation decisions accordingly.
 
 **Window Tracker Extension Gitlab Repo**: [https://gitlab.gnome.org/nishalkulkarni/window-tracker-extension/](https://gitlab.gnome.org/nishalkulkarni/window-tracker-extension/)
 
@@ -30,36 +34,36 @@ Hence I have given a more detailed module-wise breakdown for individual changes.
 
 **Current Status**: Code review completed, pending merge.
 
-#### Task 2A - App monitoring (r-app-monitor)
+#### Task 2A - App monitoring (RAppMonitor)
 This change allows us to recursively monitors changes to the app.slice directory and sub-directories, 
-I.e. the cgroups inside app.slice and emits a changed signal whenever the extended attribute on a directory has changed or
-when another program calls a function to emit change based on other signals like audio. 
+I.e. the cgroups inside app.slice and emits a changed signal whenever the xattr on a directory have changed. 
+Such a notification can also happen programatically by code monitoring other parts of the system, such as audio playback. 
 It tracks all information using watch descriptors and app paths, stored in Hash Tables for convenience and fast access.
 
-**r-app-monitor code commit**: [https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=e695d8e2a89171000e2c8981fc83d7aa52e142d3](https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=e695d8e2a89171000e2c8981fc83d7aa52e142d3)
+**RAppMonitor code commit**: [https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=e695d8e2a89171000e2c8981fc83d7aa52e142d3](https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=e695d8e2a89171000e2c8981fc83d7aa52e142d3)
 
-#### Task 2B - Resource allocation policy (r-app-policy)
+#### Task 2B - Resource allocation policy (RAppPolicy)
 It is responsible for actually making the policy decisions and setting resources accordingly. 
 Hence, allowing for a cleaner separation between tracking and resource allocation.
-It acts only when a changed signal is received from r-app-monitor. On receiving a changed signal it calculates the CPUWeight and makes a systemd DBus method call.
+It acts only when a changed signal is received from RAppMonitor. On receiving a changed signal it calculates the CPUWeight and makes a systemd DBus method call.
 Currently, only CPUWeight is adjusted for a particular cgroup and the allocation decision is based on 2 indicators
 
 1. Timestamp - Active window (timestamp = -1) gets a weight of 1000 while non-active window gets default weight of 100.
 2. Boosted - If boosted the application gets an additional weight of 500 irrespective of the applications current state (focussed or not)
 
-**r-app-policy code commit**: [https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=e8cce224184af4a44bf6da6dc896dd7139f076cf](https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=e8cce224184af4a44bf6da6dc896dd7139f076cf)
+**RAppPolicy code commit**: [https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=e8cce224184af4a44bf6da6dc896dd7139f076cf](https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=e8cce224184af4a44bf6da6dc896dd7139f076cf)
 
-#### Task 2C - Audio monitoring using pipewire (r-pw-monitor)
-After having the basic structure in place I started working on using an additional indicator, 
-pipewire in this case to allocate more CPU weight to an application currently playing audio and that's why we have the `boosted` flag.
-This serves as a heuristic for detecting interactive applications so that they aren't as throttled as non-active applications.
+#### Task 2C - Audio monitoring using pipewire (RPwMonitor)
+After having the basic structure in place I started working on using an additional indicator to boost applications. 
+In this case pipewire is monitored for audio playback so that all applications using audio have their `boosted` flag set.
+This serves as a heuristic for detecting realtime applications so that they aren't as throttled as non-active applications.
 
 It adds custom pipewire GSource to the main loop and listens to node events from pipewire-pulse API, 
-after receiving state change idle or suspended to running we set the boosted flag on RAppinfo for the associated cgroup and emit a changed signal.
+after receiving state change from idle or suspended to running we set the boosted flag on RAppinfo for the associated cgroup and emit a changed signal.
 
-**r-pw-monitor code commit**: [https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=f0ba15e0dd34b282ea7a7252bec1c97221b918c1](https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=f0ba15e0dd34b282ea7a7252bec1c97221b918c1)
+**RPwMonitor code commit**: [https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=f0ba15e0dd34b282ea7a7252bec1c97221b918c1](https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=f0ba15e0dd34b282ea7a7252bec1c97221b918c1)
 
-#### Task 2C - Boosting games using GameMode (r-game-monitor)
+#### Task 2D - Boosting games using GameMode (RGameMonitor)
 Another area where we can provide additional boost is games.
 We use a similar mechanism to boosting applications playing audio,
 taking advantage of a background utility called GameMode by Feral Interactive.
@@ -67,7 +71,7 @@ taking advantage of a background utility called GameMode by Feral Interactive.
 Every time a game is registered or unregistered we receive a signal from the dbus interface, 
 we then make the app boosted depending on the respective signal.
 
-**r-game-monitor code commit**: [https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=395647b71d6f8ee381a93b0d0590d5ea32062a4e](https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=395647b71d6f8ee381a93b0d0590d5ea32062a4e)
+**RGameMonitor code commit**: [https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=395647b71d6f8ee381a93b0d0590d5ea32062a4e](https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12/diffs?commit_id=395647b71d6f8ee381a93b0d0590d5ea32062a4e)
 
 ### Task 3 - Updates to mutter
 Having an extension that does the job of setting xattr on cgroup directories is fine for experimentation 
@@ -101,9 +105,18 @@ I did attend a few other talks and BoFs and was truly fascinated by the work tha
 
 **Slides used**: [https://github.com/nishalkulkarni/nishalkulkarni.com/blob/main/static/Nishal_GUADEC_Slides.pdf](https://github.com/nishalkulkarni/nishalkulkarni.com/blob/main/static/Nishal_GUADEC_Slides.pdf)
 
+### Previous Blog Posts
+If you want to know more, you can also checkout the following blog posts where I have documented my journey throughout GSoC 2021.
+
+| Blog Title      | Link |
+| ----------- | ----------- |
+| Part III - Merge Requests and GUADEC      | https://nishalkulkarni.tumblr.com/post/659123986757730304/gsoc-2021-part-iii-merge-requests-and-guadec       |
+| Part II - Tracking windows and monitoring files   | https://nishalkulkarni.tumblr.com/post/654958606891040768/gsoc-2021-part-ii-tracking-windows-and        |
+| Part I - Turning over a new leaf with GNOME | https://nishalkulkarni.tumblr.com/post/653170666946904064/turning-over-a-new-leaf-with-gnome |
+
 ### Final thoughts
 The entire GSoC experience was surreal, 
-it has helped me learn a lot about the internals of how various parts of a desktop environment work along with how I can utilise some kernel features.
+it has helped me learn a lot about the internals of how various parts of a desktop environment work, along with how I can utilise some kernel features.
 I feel part of a larger community in GNOME and feel more compelled to contribute to the various projects under it.
 
 None of this would have been possible without the support from my mentors, 
