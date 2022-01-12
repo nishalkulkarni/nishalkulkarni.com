@@ -75,9 +75,8 @@ const About = () => {
           >
             Vellore Institute of Technology
           </InTextLink>
-          , interested in Quantum Computing, competitive coding and am an avid
-          Linux enthusiast. Some of my hobbies are speedcubing, video gaming and
-          playing table tennis.
+          , interested in Quantum Computing and an enthusiast about all things Linux.
+          Some of my hobbies are speedcubing, video gaming and playing table tennis.
         </p>
         <p>
           This website is a place where I document my ideas, opinions,
