@@ -4,7 +4,7 @@
   </a>
 </p>
 <h1 align="center">
-  nishalkulkarni.com
+  [Archived] nishalkulkarni.com
 </h1>
 
 My personal website built using GatsbyJS...
