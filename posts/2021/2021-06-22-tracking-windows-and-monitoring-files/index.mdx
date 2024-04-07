@@ -1,0 +1,41 @@
+---
+title: GSoC 2021 · Part II - Tracking windows and monitoring files
+date: 2021-06-22
+published: true
+tags: ["open-source", "gsoc", "gnome"]
+---
+
+### Picking up where I left off…
+In the last post, I mentioned that I will be working on Implementing active resource management in GNOME.
+In this post I'll be walking you through what I've done so far, things I have learned and what I'll be working on next.
+
+### What I've done so far
+My first task was to track the active or currently open window in gnome-shell and allocate more CPU weight to it. 
+After discussing with my mentors we decided that building an extension for this will be easier so I built an extension 
+which on getting notified when the focus-window has changed calls a DBus method provided by systemd to set the unit's properties.
+Right now it sets the CPUWeight of the focussed window to 1000 while the rest of the applications remain at 100(default)
+
+You can check out the code here: [Window Tracker Extension Repo](https://gitlab.gnome.org/nishalkulkarni/window-tracker-extension)
+
+The next task was to set an extended attribute on a cgroup directory and monitoring any changes to it.
+This attribute would basically be a timestamp of when the window was last active or -1 if it's currently active.
+I started off in a dummy repository to figure out how to set extended attributes and monitor using inotify.
+Lucky for me GLib made the job a lot easier for reading and setting these attributes, all of the code for this went into the extension.
+As for the monitoring using inotify part we've decided to include that in `uresourced` for now.
+Right now it monitors the app.slice cgroup directory for creation or deletion of attributes/files.
+
+New code in uresourced: [r-app-monitor.c and r-app-info.c](https://gitlab.freedesktop.org/nishalkulkarni/uresourced/-/tree/app_monitor/src)
+
+### What did I learn?
+Admittedly, I spent more time reading documentation than writing code. 
+I learnt more about cgroups and how systemd makes it easier to set/modify resources for a particular unit.
+Also how setting attributes on files or directories works and about how we can monitor them using inotify. 
+While building all of this I stumbled upon a lot of the prior work done especially in `uresourced` and `KCGroups`.
+They served as a good reference whenever I was stuck on something or wanted to know how a particular function call worked.
+
+The mentors also helped me a lot in not getting stuck, 
+they helped me quickly unblock any trivial problems which I otherwise would have spent days getting stuck on. 😂
+
+### What's next?
+For the next part, I'll be working on integrating all of this in uresourced, completing the cgroup directory monitoring part 
+and then moving on to how we can gather more information to make better resource allocation decisions.
