@@ -1,0 +1,55 @@
+---
+title: GSoC 2021 · Part III - Merge Requests and GUADEC
+date: 2021-08-10
+published: true
+tags: ["open-source", "gsoc", "gnome"]
+---
+
+### Recap
+In the last post, I talked about how I've started working on Implementing active resource management in GNOME, 
+creating an extension to track windows and setting extended attributes along with tinkering with uresourced to handle these events.
+A lot of time has passed and I want to highlight how the project has progressed since then.
+
+### Updates to uresourced
+uresourced is the place where most of the changes have taken place, I am done with implementing the basic structure for monitoring changes 
+and then allocating resources. A better way to explain these changes would be to describe the modules. 
+
+We have `r-app-monitor` which recursively monitors changes to the app.slice directory and sub-directories, 
+I.e. the cgroups inside app.slice and emits changed signals. 
+Then we have `r-app-policy` which on receiving these signals makes allocation decision based on 2 indicators the `timestamp`, 
+which indicates whether the application is currently active and `boosted`, 
+to give additional boost to a particular application regardless of it being active or not.
+
+After having this structure in place I started working on using an additional indicator, 
+`pipewire` in this case to allocate more CPU weight to an application currently playing audio and that's why we have the `boosted` flag.
+This serves as a heuristic for detecting interactive applications so that they aren't as throttled as non-active applications.
+
+You can check out the code here: [uresourced MR](https://gitlab.freedesktop.org/benzea/uresourced/-/merge_requests/12)
+
+### Updates to mutter
+So having an extension which does the job of setting extended attributes on cgroup directories is fine for testing 
+but we obviously want these things to happen in a more subtle way and that's where mutter comes into play.
+Like the PID associated with every `MetaWindow` we also plan on having a cgroup associated with it.
+For now it's a GFile identifying the cgroup directory for that particular MetaWindow and hence the application.
+Whenever there's a focus update detected the code takes care of updating the timestamp xattr on that application's cgroup directory.
+
+New code in mutter: [mutter MR](https://gitlab.gnome.org/GNOME/mutter/-/merge_requests/1960)
+
+### How about providing a portal to manage cgroups?
+Talking about more places where we can utilize these cgroup features, 
+we have currently put up a proposal to implement a way for large applications to manage multiple worker processes. 
+This will be beneficial in providing better resource distribution and isolating bad actors.
+
+A portal where one can manage worker processes independently of systemd will allow applications to 
+further divide their processes into separate scopes(cgroups) and provide more information about them. 
+The desktop environment(resource control daemons) can then act on this information if desired.
+
+We would appreciate any feedback on this: [xdg-desktop-portal Issue](https://github.com/flatpak/xdg-desktop-portal/issues/604)
+
+### My first ever GUADEC
+I gave my very first presentation at this years GUADEC Intern Lightning Talks and the whole event was an amazing experience for me!
+Right from getting to know what other interns have been working on, to the positive feedback from people in this community.
+I did attend a few other talks and BoFs and was truly fascinated by the work that has been going on.
+
+You can check out my talk here: [GUADEC presentation](https://youtu.be/DjmL5YbcPEQ?t=6014)
+and [Slides Used](https://nishalkulkarni.com/Nishal_GUADEC_Slides.pdf)
